@@ -1,0 +1,97 @@
+@font-face {
+	font-family: 'MoonBold';
+	src: url('/MoonTypeFace/MoonBold.otf');
+}
+@font-face {
+	font-family: 'MoonLight';
+	src: url('/MoonTypeFace/MoonLight.otf');
+}
+
+
+.post {
+	color: white;
+	min-height: 50px;
+	min-width: 410px;
+	border: 1px solid;
+	border-top-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+	margin: 10px;
+}
+
+.post .content {
+	padding-left: 30px;
+	padding-right: 30px;
+	overflow: hidden;
+	max-height: 300px;
+}
+
+.post.border-purple {
+	border-color: #E120F0;
+}
+
+.post.border-blue {
+	border-color: #00F3F9;
+}
+
+.post .title {
+	font-family: 'MoonBold';
+}
+
+.post .date {
+	font-family: 'MoonLight';
+	float: right;
+}
+
+.post .body-text {
+	font-family: 'MoonLight';
+	color: orange;
+}
+
+.post span.footer-buttons {
+	float: right;
+	padding-right: 30px;
+}
+
+button {
+	background-color: black;
+}
+
+button.border-up {
+	border: 1px solid;
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+	padding-left: 30px;
+	padding-right: 30px;
+	color: lime;
+	font-family: 'MoonLight';
+
+}
+
+button.border-down {
+	border: 1px solid;
+	border-bottom-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+.neon-pink {
+	font-size: 50px;
+	text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff0080, 0 0 30px #ff0080, 0 0 40px #ff0080, 0 0 55px #ff0080, 0 0 75px #ff0080;
+	color: #fff;
+}
+
+.moon-font-light {
+	font-family: 'MoonLight';
+	color: white;
+}
+
+.moon-font-bold {
+	font-family: 'MoonBold';
+	color: white;
+}
+
+
+body {
+	background-color: black;
+}

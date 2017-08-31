@@ -1,0 +1,20 @@
+<link rel="stylesheet" type="text/css" href="/css/main.css" />
+
+{{#each posts}}
+	{{#everyOther @index  2}}
+		<div class="post border-blue">
+	{{else}}
+		<div class="post border-purple">
+	{{/everyOther}}
+	<div class="content">
+		<p class="title">{{title}}<span class="date">{{formatPostTime date}}</span></p>
+		<p class="body-text">{{body}}</p>
+	</div>
+	<span class="footer-buttons">
+		<button class="border-up">Expand</button>
+		<button class="border-up">Comments</button>
+		<button class="border-up">Share</button>
+	</span>
+	<br>
+</div>
+{{/each}}
