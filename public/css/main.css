@@ -47,7 +47,7 @@
 	color: orange;
 }
 
-.post span.footer-buttons {
+span.footer-buttons {
 	float: right;
 	padding-right: 30px;
 }
@@ -73,6 +73,8 @@ button.border-down {
 	border-bottom-right-radius: 30px;
 	padding-left: 30px;
 	padding-right: 30px;
+	color: lime;
+	font-family: 'MoonLight';
 }
 
 .neon-pink {
@@ -95,3 +97,33 @@ button.border-down {
 body {
 	background-color: black;
 }
+
+form.login {
+	border: 1px solid;
+	border-top-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+	margin: 10px;
+	border-color: #00F3F9;
+	padding-left: 30px;
+	padding-right: 30px;
+	width: 285px;
+}
+
+form.login label {
+	display: inline-block;
+	width: 90px;
+	text-align: right;
+}
+
+form.login input {
+	background-color: black;
+	border: 1px solid;
+	border-color: #E120F0;
+	color: white;
+	margin: 10px;
+}
+
+form.login input:focus {
+	outline: none;
+}
+
