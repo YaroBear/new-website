@@ -5,10 +5,10 @@ var jwt = require('jsonwebtoken');
 var JWT_SECRET = process.env.JWT_SECRET;
 
 app.use('/admin/', function(req, res, next) {
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	var request = req.body || req.query || req.headers['x-access-token'];
 
-	if (token) {
-		jwt.verify(token, JWT_SECRET, function(err, decoded) {
+	if (request.token) {
+		jwt.verify(request.token, JWT_SECRET, function(err, decoded) {
 			if (err) {
 				res.status(403).send("failed to authenticate user");
 			}
@@ -23,3 +23,4 @@ app.use('/admin/', function(req, res, next) {
 	}
 });
 
+module.exports = app;

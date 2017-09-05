@@ -47,8 +47,10 @@ app.post('/createAdmin', function(req, res){
 						res.send("error");
 					})
 					.then(function(){
-						db.close();
-						console.log("db closed");
+						if (db) {
+							db.close();
+							console.log("db closed");
+						}
 					});
 			}
 			else res.status(403).send("wrong password");
@@ -93,7 +95,10 @@ app.post('/login', function(req, res) {
 			res.send("error");
 		})
 		.then(function(){
-			db.close();
+			if (db) {
+				db.close();
+				console.log("db closed");
+			}
 		});
 });
 
@@ -116,8 +121,10 @@ app.get('/posts', function (req, res) {
 			res.send("error");
 		})
 		.then(function(){
-			db.close();
-			console.log("db closed");
+			if (db) {
+				db.close();
+				console.log("db closed");
+			}
 		});
 });
 
@@ -140,12 +147,15 @@ app.get('/notes', function (req, res) {
 			res.send("error");
 		})
 		.then(function(){
-			db.close();
-			console.log("db closed");
+			if (db) {
+				db.close();
+				console.log("db closed");
+			}
 		});
 });
 
-require('./adminRouter.js');
+const adminRouter = require('./adminRouter.js');
+app.use(adminRouter);
 
 app.post('/admin/newpost', function (req, res) {
 	var request = (req.query || req.body);
@@ -168,8 +178,10 @@ app.post('/admin/newpost', function (req, res) {
 			res.send("error");
 		})
 		.then(function(){
-			db.close();
-			console.log("db closed");
+			if (db) {
+				db.close();
+				console.log("db closed");
+			}
 		});
 });
 
@@ -194,8 +206,10 @@ app.post('/admin/newnote', function (req, res) {
 			res.send("error");
 		})
 		.then(function(){
-			db.close();
-			console.log("db closed");
+			if (db) {
+				db.close();
+				console.log("db closed");
+			}
 		});
 });
 
