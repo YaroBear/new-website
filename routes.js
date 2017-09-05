@@ -121,7 +121,9 @@ app.post('/admin/newpost', function (req, res) {
 			db = cursor;
 			console.log("connected to db");
 			var posts = db.collection('posts');
-			var newPost = {title: request.title, body: request.body, date: Date.now()};
+			var tagsString = request.tags;
+			var tagsArray = tagsString.split(',');
+			var newPost = {title: request.title, body: request.body, date: Date.now(), tags: tagsArray};
 			return posts.insertOne(newPost);
 		})
 		.then(function(response){

@@ -7,6 +7,16 @@
 	src: url('/MoonTypeFace/MoonLight.otf');
 }
 
+@font-face {
+	font-family: 'OpenSans-Regular';
+	src : url('/OpenSans/OpenSans-Regular.ttf');
+}
+
+@font-face {
+	font-family: 'OpenSans-Bold';
+	src : url('/OpenSans/OpenSans-Bold.ttf');
+}
+
 
 .post {
 	color: white;
@@ -15,7 +25,8 @@
 	border: 1px solid;
 	border-top-left-radius: 30px;
 	border-bottom-right-radius: 30px;
-	margin: 10px;
+	margin: 30px;
+	position: relative;
 }
 
 .post .content {
@@ -23,6 +34,8 @@
 	padding-right: 30px;
 	overflow: hidden;
 	max-height: 300px;
+	display: block;
+	margin-bottom: 30px;
 }
 
 .post.border-purple {
@@ -34,27 +47,37 @@
 }
 
 .post .title {
-	font-family: 'MoonBold';
+	font-family: 'OpenSans-Bold';
 }
 
 .post .date {
-	font-family: 'MoonLight';
+	font-family: 'OpenSans-Regular';
 	float: right;
 }
 
 .post .body-text {
-	font-family: 'MoonLight';
+	font-family: 'OpenSans-Regular';
 	color: orange;
 }
 
-span.footer-buttons {
-	float: right;
+.footer-buttons {
 	padding-right: 30px;
+	position: absolute;
+	right: 0;
+
+}
+
+.footer-tags {
+	position: absolute;
+	padding-left: 30px;
+	bottom: 0;
+	left: 0;
 }
 
 button {
 	background-color: black;
 }
+
 
 button.border-up {
 	border: 1px solid;
@@ -62,10 +85,15 @@ button.border-up {
 	border-top-right-radius: 30px;
 	padding-left: 30px;
 	padding-right: 30px;
-	color: lime;
-	font-family: 'MoonLight';
+	color: #FF69B4;
+	font-family: 'OpenSans-Regular';
 
 }
+
+button.border-up:focus {
+	outline: none;
+}
+
 
 button.border-down {
 	border: 1px solid;
@@ -74,11 +102,27 @@ button.border-down {
 	padding-left: 30px;
 	padding-right: 30px;
 	color: lime;
-	font-family: 'MoonLight';
+	font-family: 'OpenSans-Regular';
 }
 
+button.border-down:focus {
+	outline: none;
+	text-shadow: 0 0 5px #49fb35, 0 0 10px #49fb35, 0 0 20px #24f70c, 0 0 30px #24f70c, 0 0 40px #24f70c, 0 0 55px #24f70c, 0 0 75px #24f70c;
+	color: lime;
+}
+
+button.border-down:hover {
+	outline: none;
+	text-shadow: 0 0 5px #49fb35, 0 0 10px #49fb35, 0 0 20px #24f70c, 0 0 30px #24f70c, 0 0 40px #24f70c, 0 0 55px #24f70c, 0 0 75px #24f70c;
+	color: lime;
+}
+
+button.border-up:focus {
+	outline: none;
+}
+
+
 .neon-pink {
-	font-size: 50px;
 	text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff0080, 0 0 30px #ff0080, 0 0 40px #ff0080, 0 0 55px #ff0080, 0 0 75px #ff0080;
 	color: #fff;
 }
@@ -99,6 +143,7 @@ body {
 }
 
 form.login {
+	position: relative;
 	border: 1px solid;
 	border-top-left-radius: 30px;
 	border-bottom-right-radius: 30px;
