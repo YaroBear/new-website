@@ -137,6 +137,15 @@ button.border-up:focus {
 	color: white;
 }
 
+.os-font-regular {
+	font-family: 'OpenSans-Regular';
+	color: white;
+}
+
+.os-font-Bold {
+	font-family: 'OpenSans-Bold';
+	color: white;
+}
 
 body {
 	background-color: black;
@@ -156,7 +165,7 @@ form.login {
 
 form.login label {
 	display: inline-block;
-	width: 90px;
+	width: 80px;
 	text-align: right;
 }
 
