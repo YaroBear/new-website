@@ -58,48 +58,58 @@ app.post('/createAdmin', function(req, res){
 });
 
 app.get('/login', function(req, res) {
-	res.render('login.hbs');
+	res.sendFile('/views/login.html', {root: __dirname});
 });
 
 app.post('/login', function(req, res) {
-	var request = (req.query || req.body);
+	var request = req.body;
 	var db;
 	var payload;
-	MongoClient.connect(uri)
-		.then(function(cursor){
-			db = cursor;
-			console.log("connected to db");
-			return db.collection('users').findOne({username: request.username});
-		})
-		.then(function(user){
-			console.log("user found");
-			payload = {
-				userID: user["_id"],
-				username: user.username
-			};
-			return bcrypt.compare(request.password, user.password);
-		})
-		.then(function(same){
-			if (same)
-			{
-				console.log("user " + payload.username + " given token");
-				var token = jwt.sign(payload, JWT_SECRET, {
-					expiresIn: 60 * 60
-				});
-				res.send(token);	
-			}
-			else res.status(401).send({message: "wrong username and/or password"});
-		})
-		.catch(function(err){
-			console.log(err);
-			res.send("error");
-		})
-		.then(function(){
-			if (db) {
-				db.close();
-				console.log("db closed");
-			}
-		});
+
+	if (!request.username || !request.password)
+	{
+		res.status(401).send({message: "you must provide a username and password"});
+	}
+	else {
+		MongoClient.connect(uri)
+			.then(function(cursor){
+				db = cursor;
+				console.log("connected to db");
+				return db.collection('users').findOne({username: request.username});
+			})
+			.then(function(user){
+				if (user) {
+					console.log("user found");
+					payload = {
+						userID: user["_id"],
+						username: user.username
+					};
+					return bcrypt.compare(request.password, user.password);
+				}
+				else return false;
+			})
+			.then(function(same){
+				if (same)
+				{
+					console.log("user " + payload.username + " given token");
+					var token = jwt.sign(payload, JWT_SECRET, {
+						expiresIn: 60 * 60
+					});
+					res.status(200).send({token: token});	
+				}
+				else res.status(401).send({message: "wrong username and/or password"});
+			})
+			.catch(function(err){
+				console.log(err);
+				res.send("error");
+			})
+			.then(function(){
+				if (db) {
+					db.close();
+					console.log("db closed");
+				}
+			});
+	}
 });
 
 app.get('/posts', function (req, res) {

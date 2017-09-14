@@ -1,0 +1,54 @@
+<script>
+window.onload = function() {
+	var request;
+	document.getElementById("submit").addEventListener('click', loginRequest);
+	function loginRequest() {
+		request = new XMLHttpRequest();
+
+		if(!request) {
+			alert("cannot create XMLHTTP instance");
+		}
+		else {
+			var uname = document.getElementById("username").value;
+			var pword = document.getElementById("password").value;
+			request.onreadystatechange = response;
+			request.open('POST', "http://localhost:3000/login");
+			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			request.send(JSON.stringify({username: uname, password: pword}));
+		}
+	}
+	function response() {
+		if (request.readyState === XMLHttpRequest.DONE) {
+			var response = JSON.parse(request.responseText);
+			if (request.status === 200) {
+				localStorage.setItem('token', response.token);
+				alert("Logged in");
+			}
+			else {
+				alert(response.message);
+			}
+		}
+	}
+}
+
+</script>
+
+<html>
+
+<link rel="stylesheet" type="text/css" href="/css/main.css" />
+
+	<form class="login os-font-regular">
+		<div>
+			<label for="username">Username:</label>
+			<input type="text" id="username"></input>
+		</div>
+		<div>
+			<label for="password">Password:</label>
+			<input type="password" id="password"></input>
+		</div>
+		<div class="footer-buttons">
+			<button type="button" id="submit" class="border-down">Submit</button>
+		</div>
+	</form>
+
+<html>
