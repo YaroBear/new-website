@@ -1,0 +1,33 @@
+<script>
+	var request;
+	function sendToken() {
+		request = new XMLHttpRequest();
+
+		if(!request) {
+			alert("cannot create XMLHTTP instance");
+		}
+		else {
+			var tk = localStorage.getItem('token');
+			request.onreadystatechange = response;
+			request.open('GET', "http://localhost:3000/admin/newpost");
+			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			request.send(JSON.stringify({token : tk}));
+		}
+	}
+	function response() {
+		if (request.readyState === XMLHttpRequest.DONE) {
+			var response = JSON.parse(request.responseText);
+			if (request.status === 200) {
+				console.log("you can create a new post");
+			}
+			else {
+				alert(response.message);
+			}
+		}
+	}
+
+	sendToken();
+</script>
+
+<html>
+</html>

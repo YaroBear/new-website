@@ -167,6 +167,10 @@ app.get('/notes', function (req, res) {
 const adminRouter = require('./adminRouter.js');
 app.use(adminRouter);
 
+app.get('/admin/newpost', function(req,res) {
+	res.sendFile('/views/newpost.html', {root: __dirname});
+});
+
 app.post('/admin/newpost', function (req, res) {
 	var request = (req.query || req.body);
 	var db;
