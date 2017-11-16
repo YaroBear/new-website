@@ -7,6 +7,13 @@ var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var JWT_SECRET = process.env.JWT_SECRET;
 
+const userLogin = require('./user-login');
+
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // -- API endpoints
 
 require('./customHelpers.js');
@@ -62,52 +69,20 @@ app.get('/login', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
-	var request = req.body;
-	var db;
-	var payload;
+	let request = req.body;
 
 	if (!request.username || !request.password)
 	{
 		res.status(401).send({message: "you must provide a username and password"});
 	}
 	else {
-		MongoClient.connect(uri)
-			.then(function(cursor){
-				db = cursor;
-				console.log("connected to db");
-				return db.collection('users').findOne({username: request.username});
+		userLogin.doTheLogin(request.username, request.password)
+			.then((token) => {
+				res.send({token : token});
 			})
-			.then(function(user){
-				if (user) {
-					console.log("user found");
-					payload = {
-						userID: user["_id"],
-						username: user.username
-					};
-					return bcrypt.compare(request.password, user.password);
-				}
-				else return false;
-			})
-			.then(function(same){
-				if (same)
-				{
-					console.log("user " + payload.username + " given token");
-					var token = jwt.sign(payload, JWT_SECRET, {
-						expiresIn: 60 * 60
-					});
-					res.status(200).send({token: token});	
-				}
-				else res.status(401).send({message: "wrong username and/or password"});
-			})
-			.catch(function(err){
-				console.log(err);
-				res.send("error");
-			})
-			.then(function(){
-				if (db) {
-					db.close();
-					console.log("db closed");
-				}
+			.catch((error) => {
+				Object.defineProperty(error, 'message', {enumerable: true});
+				res.status(403).send(error);
 			});
 	}
 });
