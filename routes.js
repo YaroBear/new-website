@@ -7,7 +7,10 @@ var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var JWT_SECRET = process.env.JWT_SECRET;
 
+const MONGO_URI = process.env.MONGO_URI;
+
 const userLogin = require('./user-login');
+const mongoConnect = require('./mongo-connect');
 
 const bodyParser = require('body-parser');
 
@@ -71,12 +74,15 @@ app.get('/login', function(req, res) {
 app.post('/login', function(req, res) {
 	let request = req.body;
 
-	if (!request.username || !request.password)
-	{
+	let mongoConnection = new mongoConnect(MONGO_URI);
+	let login = new userLogin(mongoConnection);
+
+	if (!request.username || !request.password) {
 		res.status(401).send({message: "you must provide a username and password"});
 	}
 	else {
-		userLogin.doTheLogin(request.username, request.password)
+
+		login.doTheLogin(request.username, request.password)
 			.then((token) => {
 				res.send({token : token});
 			})

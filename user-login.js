@@ -1,22 +1,22 @@
-const MongoClient = require('mongodb').MongoClient;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
-const URI = process.env.MONGO_URI;
 
-class UserLogin{
-	static connectToDB(uri){
-		return MongoClient.connect(uri);
+class UserLogin {
+
+	constructor(db){
+		this.db = db;
 	}
-	static findUser(cursor, user){
-		return cursor.collection('users').findOne({username: user})
+
+	getUser(user){
+		return this.db.getUser('users', user)
 			.then((user) => {
 				if(user) return user;
 				else throw new Error("Invalid credentials");
 			});
 	}
 
-	static checkCredentials(entryPassword, actualPassword){
+	checkCredentials(entryPassword, actualPassword){
 		return bcrypt.compare(entryPassword, actualPassword)
 			.then((valid) =>{
 				if (valid) return true;
@@ -24,18 +24,18 @@ class UserLogin{
 			})
 	}
 
-	static generateToken(payload){
+	generateToken(payload){
 		let token = jwt.sign(payload, JWT_SECRET, {
 			expiresIn: "1h"
 		});
 		return token;
 	}
 
-	static doTheLogin(username, password){
+	doTheLogin(username, password){
 		let payload = {};
-		return this.connectToDB(URI)
-			.then((cursor) =>{
-				return this.findUser(cursor, username);
+		return this.db.getInstance()
+			.then(() =>{
+				return this.getUser(username);
 			})
 			.then((user) => {
 				payload.username = user.username;
