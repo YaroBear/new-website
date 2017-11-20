@@ -1,6 +1,6 @@
 const Handlebars = require('hbs');
 
-Handlebars.registerHelper("everyOther", function (index, amount, scope) {
+Handlebars.registerHelper("everyOther", function(index, amount, scope) {
     if ( ++index % amount) 
         return scope.inverse(this);
     else 
@@ -17,9 +17,9 @@ Handlebars.registerHelper("everyOther", function (index, amount, scope) {
 {{/each}}
 */
 
-Handlebars.registerHelper('formatPostTime', function (date) {
+Handlebars.registerHelper('formatPostTime', function(date) {
 	var newDate = new Date(date);
-	var formatted = newDate.getMonth() + "/" + newDate.getDate() + "/" + newDate.getFullYear();
+	var formatted = (newDate.getMonth() + 1) + "/" + newDate.getDate() + "/" + newDate.getFullYear();
 	return formatted;
 });
 

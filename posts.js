@@ -4,7 +4,14 @@ class Posts {
 		this.db = db;
 	}
 
-	newPost(){
+	newPost(collection, post){
+		return this.db.getInstance()
+			.then(() => {
+				return this.db.newPost(collection, post);
+			})
+			.catch((error) => {
+				throw error;
+			});
 
 	}
 

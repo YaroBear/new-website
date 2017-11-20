@@ -80,12 +80,12 @@ app.post('/login', function(req, res) {
 			})
 			.catch((error) => {
 				Object.defineProperty(error, 'message', {enumerable: true});
-				res.status(403).send(error);
+				res.status(500).send(error);
 			});
 	}
 });
 
-app.get('/posts', function (req, res) {
+app.get('/posts', function(req, res) {
 
 	let mongoConnection = new mongoConnect(MONGO_URI);
 	let post = new posts(mongoConnection);
@@ -96,33 +96,22 @@ app.get('/posts', function (req, res) {
 		})
 		.catch((error) => {
 			console.log(error);
-			res.send("error");
+			res.status(500).send({message: "error retrieving posts"});
 		});
 });
 
-app.get('/notes', function (req, res) {
-	var request = (req.query || req.body);
-	var db;
-	MongoClient.connect(MONGO_URI)
-		.then(function(cursor){
-			db = cursor;
-			console.log("connected to db");
-			return db.collection('notes').find().sort({date: -1}).toArray();
-		})
-		.then(function(documents){
-			var context = {posts: documents};
-			res.render('posts.hbs', context);
+app.get('/notes', function(req, res) {
 
+	let mongoConnection = new mongoConnect(MONGO_URI);
+	let post = new posts(mongoConnection);
+
+	return post.getPosts('notes', {date: -1})
+		.then((posts) => {
+			res.render('posts.hbs', {posts : posts});
 		})
-		.catch(function(err){
-			console.log(err);
-			res.send("error");
-		})
-		.then(function(){
-			if (db) {
-				db.close();
-				console.log("db closed");
-			}
+		.catch((error) => {
+			console.log(error);
+			res.status(500).send({message: "error retrieving notes"});
 		});
 });
 
@@ -134,31 +123,30 @@ app.get('/admin/newpost', function(req,res) {
 });
 
 app.post('/admin/newpost', function (req, res) {
-	var request = (req.query || req.body);
-	var db;
-	MongoClient.connect(MONGO_URI)
-		.then(function(cursor){
-			db = cursor;
-			console.log("connected to db");
-			var posts = db.collection('posts');
-			var tagsString = request.tags;
-			var tagsArray = tagsString.split(',');
-			var newPost = {title: request.title, body: request.body, date: Date.now(), tags: tagsArray};
-			return posts.insertOne(newPost);
-		})
-		.then(function(response){
-			console.log("post added");
-			res.send("post added");
-		}).catch(function(err){
-			console.log(err);
-			res.send("error");
-		})
-		.then(function(){
-			if (db) {
-				db.close();
-				console.log("db closed");
-			}
-		});
+
+	if (!req.body.title || !req.body.body){
+		res.status(400).send({message : 'title and body required'});
+	}
+
+	else {
+		let mongoConnection = new mongoConnect(MONGO_URI);
+		let post = new posts(mongoConnection);
+
+		let data = {};
+		data.title = req.body.title;
+		data.body = req.body.body;
+		data.date = new Date(Date.now());
+		data.tags = req.body.tags.split(',');
+
+		post.newPost('posts', data)
+			.then(() =>{
+				res.status(201).send({message : 'post added'});
+			})
+			.catch((error) => {
+				console.log(error);
+				res.status(500).send({message : 'error adding post'});
+			});
+	}
 });
 
 app.post('/admin/newnote', function (req, res) {

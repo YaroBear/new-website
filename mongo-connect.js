@@ -50,6 +50,18 @@ class MongoConnect {
 				throw error;
 			});
 	}
+
+	newPost(collection, post){
+		return this.instance.collection(collection).insertOne(post)
+			.then((success) => {
+				this.close();
+				return success;
+			})
+			.catch((error) => {
+				this.close();
+				throw error;
+			});
+	}
 }
 
 module.exports = MongoConnect;
