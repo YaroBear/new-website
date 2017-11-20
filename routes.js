@@ -2,24 +2,17 @@ const express = require('express');
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config();
-var uri = process.env.MONGO_URI;
-var bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
-var JWT_SECRET = process.env.JWT_SECRET;
 
 const MONGO_URI = process.env.MONGO_URI;
 
 const userLogin = require('./user-login');
 const mongoConnect = require('./mongo-connect');
 
-const bodyParser = require('body-parser');
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const posts = require('./posts');
 
 // -- API endpoints
 
-require('./customHelpers.js');
+require('./custom-helpers.js');
 
 app.get('/', function(req, res){
 	res.send("Nothing here yet");
@@ -32,7 +25,7 @@ app.post('/createAdmin', function(req, res){
 		.then(function(same){
 			if (same)
 			{
-				MongoClient.connect(uri)
+				MongoClient.connect(MONGO_URI)
 					.then(function(cursor){
 						db = cursor;
 						console.log("connected to db");
@@ -72,17 +65,16 @@ app.get('/login', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
-	let request = req.body;
 
-	let mongoConnection = new mongoConnect(MONGO_URI);
-	let login = new userLogin(mongoConnection);
-
-	if (!request.username || !request.password) {
+	if (!req.body.username || !req.body.password) {
 		res.status(401).send({message: "you must provide a username and password"});
 	}
-	else {
 
-		login.doTheLogin(request.username, request.password)
+	else {
+		let mongoConnection = new mongoConnect(MONGO_URI);
+		let login = new userLogin(mongoConnection).forTime("1h");
+
+		login.doTheLogin(req.body.username, req.body.password)
 			.then((token) => {
 				res.send({token : token});
 			})
@@ -94,35 +86,24 @@ app.post('/login', function(req, res) {
 });
 
 app.get('/posts', function (req, res) {
-	var request = (req.query || req.body);
-	var db;
-	MongoClient.connect(uri)
-		.then(function(cursor){
-			db = cursor;
-			console.log("connected to db");
-			return db.collection('posts').find().sort({date: -1}).toArray();
-		})
-		.then(function(documents){
-			var context = {posts: documents};
-			res.render('posts.hbs', context);
 
+	let mongoConnection = new mongoConnect(MONGO_URI);
+	let post = new posts(mongoConnection);
+
+	return post.getPosts('posts', {date: -1})
+		.then((posts) => {
+			res.render('posts.hbs', {posts : posts});
 		})
-		.catch(function(err){
-			console.log(err);
+		.catch((error) => {
+			console.log(error);
 			res.send("error");
-		})
-		.then(function(){
-			if (db) {
-				db.close();
-				console.log("db closed");
-			}
 		});
 });
 
 app.get('/notes', function (req, res) {
 	var request = (req.query || req.body);
 	var db;
-	MongoClient.connect(uri)
+	MongoClient.connect(MONGO_URI)
 		.then(function(cursor){
 			db = cursor;
 			console.log("connected to db");
@@ -155,7 +136,7 @@ app.get('/admin/newpost', function(req,res) {
 app.post('/admin/newpost', function (req, res) {
 	var request = (req.query || req.body);
 	var db;
-	MongoClient.connect(uri)
+	MongoClient.connect(MONGO_URI)
 		.then(function(cursor){
 			db = cursor;
 			console.log("connected to db");
@@ -183,7 +164,7 @@ app.post('/admin/newpost', function (req, res) {
 app.post('/admin/newnote', function (req, res) {
 	var request = (req.query || req.body);
 	var db;
-	MongoClient.connect(uri)
+	MongoClient.connect()
 		.then(function(cursor){
 			db = cursor;
 			console.log("connected to db");

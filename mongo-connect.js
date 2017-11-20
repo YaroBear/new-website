@@ -7,8 +7,16 @@ class MongoConnect {
 		this.instance;
 	}
 
+	open(){
+		return MongoClient.connect(this.uri);
+	}
+
+	close(){
+		this.instance.close();
+	}
+
 	getInstance(){
-		return MongoClient.connect(this.uri)
+		return this.open()
 			.then((db) =>{
 				this.instance = db;
 				return this.instance;
@@ -20,7 +28,27 @@ class MongoConnect {
 	}
 
 	getUser(collection, user){
-		return this.instance.collection(collection).findOne({username: user});
+		return this.instance.collection(collection).findOne({username: user})
+			.then((user) =>{
+				this.close();
+				return user;
+			})
+			.catch((error) =>{
+				this.close();
+				throw error;
+			});
+	}
+
+	getPosts(collection, sort){
+		return this.instance.collection(collection).find().sort(sort).toArray()
+			.then((posts) => {
+				this.close();
+				return posts;
+			})
+			.catch((error) => {
+				this.close();
+				throw error;
+			});
 	}
 }
 

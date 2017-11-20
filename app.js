@@ -6,8 +6,10 @@ const WebSocket = require('ws');
 const Handlebars = require('hbs');
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 

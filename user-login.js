@@ -6,6 +6,7 @@ class UserLogin {
 
 	constructor(db){
 		this.db = db;
+		this.expires;
 	}
 
 	getUser(user){
@@ -26,7 +27,7 @@ class UserLogin {
 
 	generateToken(payload){
 		let token = jwt.sign(payload, JWT_SECRET, {
-			expiresIn: "1h"
+			expiresIn: this.expires
 		});
 		return token;
 	}
@@ -47,6 +48,11 @@ class UserLogin {
 			.catch((error) => {
 				throw error;
 			});
+	}
+
+	forTime(time){
+		this.expires = time;
+		return this;
 	}
 }
 

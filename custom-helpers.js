@@ -22,3 +22,5 @@ Handlebars.registerHelper('formatPostTime', function (date) {
 	var formatted = newDate.getMonth() + "/" + newDate.getDate() + "/" + newDate.getFullYear();
 	return formatted;
 });
+
+module.exports = Handlebars;
