@@ -122,7 +122,7 @@ app.get('/admin/newpost', function(req,res) {
 	res.sendFile('/views/newpost.html', {root: __dirname});
 });
 
-app.post('/admin/newpost', function (req, res) {
+app.post('/admin/newpost', function(req, res) {
 
 	if (!req.body.title || !req.body.body){
 		res.status(400).send({message : 'title and body required'});
@@ -149,32 +149,31 @@ app.post('/admin/newpost', function (req, res) {
 	}
 });
 
-app.post('/admin/newnote', function (req, res) {
-	var request = (req.query || req.body);
-	var db;
-	MongoClient.connect()
-		.then(function(cursor){
-			db = cursor;
-			console.log("connected to db");
-			var posts = db.collection('notes');
-			var tagsString = request.tags;
-			var tagsArray = tagsString.split(',');
-			var newNote = {title: request.title, body: request.body, date: Date.now(), tags: tagsArray};
-			return posts.insertOne(newNote);
-		})
-		.then(function(response){
-			console.log("node added");
-			res.send("note added");
-		}).catch(function(err){
-			console.log(err);
-			res.send("error");
-		})
-		.then(function(){
-			if (db) {
-				db.close();
-				console.log("db closed");
-			}
-		});
+app.post('/admin/newnote', function(req, res) {
+
+	if (!req.body.title || !req.body.body){
+		res.status(400).send({message : 'title and body required'});
+	}
+
+	else {
+		let mongoConnection = new mongoConnect(MONGO_URI);
+		let post = new posts(mongoConnection);
+
+		let data = {};
+		data.title = req.body.title;
+		data.body = req.body.body;
+		data.date = new Date(Date.now());
+		data.tags = req.body.tags.split(',');
+
+		post.newPost('notes', data)
+			.then(() =>{
+				res.status(201).send({message : 'note added'});
+			})
+			.catch((error) => {
+				console.log(error);
+				res.status(500).send({message : 'error adding note'});
+			});
+	}
 });
 
 app.use(function (req, res, next) {
