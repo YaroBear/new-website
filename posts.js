@@ -5,10 +5,7 @@ class Posts {
 	}
 
 	newPost(collection, post){
-		return this.db.getInstance()
-			.then(() => {
-				return this.db.newPost(collection, post);
-			})
+		return this.db.newPost(collection, post)
 			.catch((error) => {
 				throw error;
 			});
@@ -16,10 +13,7 @@ class Posts {
 	}
 
 	getPosts(collection, sort){
-		return this.db.getInstance()
-			.then(() => {
-				return this.db.getPosts(collection, sort);
-			})
+		return this.db.getPosts(collection, sort)
 			.catch((error) =>{
 				throw error;
 			});
