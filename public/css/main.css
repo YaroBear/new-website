@@ -20,8 +20,9 @@
 
 .post {
 	color: white;
-	min-height: 50px;
+	min-height: 100px;
 	min-width: 410px;
+	max-height: 300px;
 	border: 1px solid;
 	border-top-left-radius: 30px;
 	border-bottom-right-radius: 30px;
@@ -63,6 +64,7 @@
 .footer-buttons {
 	padding-right: 30px;
 	position: absolute;
+	bottom: -22;
 	right: 0;
 
 }

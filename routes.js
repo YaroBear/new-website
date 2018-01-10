@@ -80,7 +80,10 @@ module.exports = function(app, db){
 			data.title = req.body.title;
 			data.body = req.body.body;
 			data.date = new Date(Date.now());
-			data.tags = req.body.tags.split(',');
+			if(req.body.tags){
+				data.tags = req.body.tags.split(',');
+			}
+			
 
 			post.newPost('posts', data)
 				.then(() =>{
@@ -106,7 +109,10 @@ module.exports = function(app, db){
 			data.title = req.body.title;
 			data.body = req.body.body;
 			data.date = new Date(Date.now());
-			data.tags = req.body.tags.split(',');
+			if(req.body.tags){
+				data.tags = req.body.tags.split(',');
+			}
+			
 
 			post.newPost('notes', data)
 				.then(() =>{

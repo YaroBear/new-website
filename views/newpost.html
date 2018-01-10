@@ -8,6 +8,7 @@
 		}
 		else {
 			var tk = localStorage.getItem('token');
+			console.log(tk);
 			request.onreadystatechange = response;
 			request.open('GET', "http://localhost:3000/admin/newpost");
 			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");

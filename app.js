@@ -16,7 +16,7 @@ app.use(express.static('public'));
 
 app.set('view-engine', 'hbs');
 
-var routes = require('./routes.js');
+const routes = require('./routes.js');
 
 const db = new mongoConnect(MONGO_URI);
 

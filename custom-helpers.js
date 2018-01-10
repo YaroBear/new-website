@@ -18,9 +18,7 @@ Handlebars.registerHelper("everyOther", function(index, amount, scope) {
 */
 
 Handlebars.registerHelper('formatPostTime', function(date) {
-	var newDate = new Date(date);
-	var formatted = (newDate.getMonth() + 1) + "/" + newDate.getDate() + "/" + newDate.getFullYear();
-	return formatted;
+	return new Date(date).toLocaleDateString();
 });
 
 module.exports = Handlebars;
