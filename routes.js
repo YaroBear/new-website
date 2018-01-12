@@ -38,7 +38,7 @@ module.exports = function(app, db){
 
 		return post.getPosts('posts', {date: -1})
 			.then((posts) => {
-				res.render('posts.hbs', {posts : posts});
+				res.status(200).send({posts: posts})
 			})
 			.catch((error) => {
 				console.log(error);
@@ -52,7 +52,7 @@ module.exports = function(app, db){
 
 		return post.getPosts('notes', {date: -1})
 			.then((posts) => {
-				res.render('posts.hbs', {posts : posts});
+				res.status(200).send({notes: posts})
 			})
 			.catch((error) => {
 				console.log(error);

@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const url = require('url');
-const Handlebars = require('hbs');
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
@@ -13,8 +12,6 @@ const MONGO_URI = process.env.MONGO_URI;
 const mongoConnect = require('./mongo-connect');
 
 app.use(express.static('public'));
-
-app.set('view-engine', 'hbs');
 
 const routes = require('./routes.js');
 
