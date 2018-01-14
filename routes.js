@@ -1,16 +1,7 @@
 const userLogin = require('./user-login');
 const posts = require('./posts');
-require('./custom-helpers.js');
 
 module.exports = function(app, db){
-
-	app.get('/', function(req, res){
-		res.send("Nothing here yet");
-	});
-
-	app.get('/login', function(req, res) {
-		res.sendFile('/views/login.html', {root: __dirname});
-	});
 
 	app.post('/login', function(req, res) {
 
@@ -38,7 +29,7 @@ module.exports = function(app, db){
 
 		return post.getPosts('posts', {date: -1})
 			.then((posts) => {
-				res.render('posts.hbs', {posts : posts});
+				res.status(200).send(posts)
 			})
 			.catch((error) => {
 				console.log(error);
@@ -52,7 +43,7 @@ module.exports = function(app, db){
 
 		return post.getPosts('notes', {date: -1})
 			.then((posts) => {
-				res.render('posts.hbs', {posts : posts});
+				res.status(200).send(posts)
 			})
 			.catch((error) => {
 				console.log(error);
@@ -62,10 +53,6 @@ module.exports = function(app, db){
 
 	const adminRouter = require('./adminRouter.js');
 	app.use(adminRouter);
-
-	app.get('/admin/newpost', function(req,res) {
-		res.sendFile('/views/newpost.html', {root: __dirname});
-	});
 
 	app.post('/admin/newpost', function(req, res) {
 
@@ -80,6 +67,7 @@ module.exports = function(app, db){
 			data.title = req.body.title;
 			data.body = req.body.body;
 			data.date = new Date(Date.now());
+			data.comments = [];
 			if(req.body.tags){
 				data.tags = req.body.tags.split(',');
 			}
@@ -109,6 +97,7 @@ module.exports = function(app, db){
 			data.title = req.body.title;
 			data.body = req.body.body;
 			data.date = new Date(Date.now());
+			data.comments = [];
 			if(req.body.tags){
 				data.tags = req.body.tags.split(',');
 			}

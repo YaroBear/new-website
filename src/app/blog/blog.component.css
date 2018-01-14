@@ -1,0 +1,152 @@
+@font-face {
+	font-family: 'MoonBold';
+	src: url('../../assets/MoonTypeFace/MoonBold.otf');
+}
+@font-face {
+	font-family: 'MoonLight';
+	src: url('../../assets/MoonTypeFace/MoonLight.otf');
+}
+
+@font-face {
+	font-family: 'OpenSans-Regular';
+	src : url('../../assets/OpenSans/OpenSans-Regular.ttf');
+}
+
+@font-face {
+	font-family: 'OpenSans-Bold';
+	src : url('../../assets/OpenSans/OpenSans-Bold.ttf');
+}
+
+
+.post {
+	color: white;
+	min-height: 100px;
+	min-width: 410px;
+	max-height: 300px;
+	border: 1px solid;
+	border-top-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+	margin: 30px;
+	position: relative;
+}
+
+.post .content {
+	padding-left: 30px;
+	padding-right: 30px;
+	overflow: hidden;
+	max-height: 300px;
+}
+
+.post.border-purple {
+	border-color: #E120F0;
+}
+
+.post.border-blue {
+	border-color: #00F3F9;
+}
+
+.post .title {
+	font-family: 'OpenSans-Bold';
+}
+
+.post .date {
+	font-family: 'OpenSans-Regular';
+	float: right;
+}
+
+.post .body-text {
+	font-family: 'OpenSans-Regular';
+	color: orange;
+}
+
+.footer-buttons {
+	padding-right: 30px;
+	position: absolute;
+	right: 0;
+	bottom: -22px;
+
+}
+
+.footer-tags {
+	position: absolute;
+	padding-left: 30px;
+	bottom: 0;
+	left: 0;
+}
+
+button {
+	background-color: black;
+}
+
+
+button.border-up {
+	border: 1px solid;
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+	padding-left: 30px;
+	padding-right: 30px;
+	color: #FF69B4;
+	font-family: 'OpenSans-Regular';
+
+}
+
+button.border-up:focus {
+	outline: none;
+}
+
+
+button.border-down {
+	border: 1px solid;
+	border-bottom-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+	padding-left: 30px;
+	padding-right: 30px;
+	color: lime;
+	font-family: 'OpenSans-Regular';
+}
+
+button.border-down:focus {
+	outline: none;
+	text-shadow: 0 0 5px #49fb35, 0 0 10px #49fb35, 0 0 20px #24f70c, 0 0 30px #24f70c, 0 0 40px #24f70c, 0 0 55px #24f70c, 0 0 75px #24f70c;
+	color: lime;
+}
+
+button.border-down:hover {
+	outline: none;
+	text-shadow: 0 0 5px #49fb35, 0 0 10px #49fb35, 0 0 20px #24f70c, 0 0 30px #24f70c, 0 0 40px #24f70c, 0 0 55px #24f70c, 0 0 75px #24f70c;
+	color: lime;
+}
+
+button.border-up:focus {
+	outline: none;
+}
+
+
+.neon-pink {
+	text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff0080, 0 0 30px #ff0080, 0 0 40px #ff0080, 0 0 55px #ff0080, 0 0 75px #ff0080;
+	color: #fff;
+}
+
+.moon-font-light {
+	font-family: 'MoonLight';
+	color: white;
+}
+
+.moon-font-bold {
+	font-family: 'MoonBold';
+	color: white;
+}
+
+.os-font-regular {
+	font-family: 'OpenSans-Regular';
+	color: white;
+}
+
+.os-font-Bold {
+	font-family: 'OpenSans-Bold';
+	color: white;
+}
+
+body {
+	background-color: black;
+}
