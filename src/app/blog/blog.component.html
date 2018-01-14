@@ -1,16 +1,15 @@
-<div *ngFor="let post of posts">
-  <div class="post border-purple">
-    <div class="content">
-      <p class="title">{{post.title}}<span class="date">{{post.date}}</span></p>
-      <p class="body-text">{{post.body}}</p>
-    </div>
-    <div class="footer-buttons">
-      <button class="border-down">Expand</button>
-      <button class="border-down">Comments</button>
-      <button class="border-down">Share</button>
-    </div>
-    <div class="footer-tags">
-        <button class="border-up" *ngFor="let tag of post.tags">{{tag}}</button>
-    </div>
+<div class="post" *ngFor="let post of posts; let odd=odd, let even=even"
+  [ngClass]="{'border-blue': even , 'border-purple': odd}">
+  <div class="content">
+    <p class="title">{{post.title}}<span class="date">{{post.date | date}}</span></p>
+    <p class="body-text">{{post.body}}</p>
+  </div>
+  <div class="footer-buttons">
+    <button class="border-down">Expand</button>
+    <button class="border-down">Comments</button>
+    <button class="border-down">Share</button>
+  </div>
+  <div class="footer-tags">
+      <button class="border-up" *ngFor="let tag of post.tags">{{tag}}</button>
   </div>
 </div>

@@ -11,7 +11,7 @@ require('dotenv').config();
 const MONGO_URI = process.env.MONGO_URI;
 const mongoConnect = require('./mongo-connect');
 
-app.use(express.static('public'));
+app.use(express.static('dist'));
 
 const routes = require('./routes.js');
 

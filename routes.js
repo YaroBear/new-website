@@ -4,14 +4,6 @@ require('./custom-helpers.js');
 
 module.exports = function(app, db){
 
-	app.get('/', function(req, res){
-		res.send("Nothing here yet");
-	});
-
-	app.get('/login', function(req, res) {
-		res.sendFile('/views/login.html', {root: __dirname});
-	});
-
 	app.post('/login', function(req, res) {
 
 		if (!req.body.username || !req.body.password) {
@@ -38,7 +30,7 @@ module.exports = function(app, db){
 
 		return post.getPosts('posts', {date: -1})
 			.then((posts) => {
-				res.status(200).send({posts: posts})
+				res.status(200).send(posts)
 			})
 			.catch((error) => {
 				console.log(error);
@@ -52,7 +44,7 @@ module.exports = function(app, db){
 
 		return post.getPosts('notes', {date: -1})
 			.then((posts) => {
-				res.status(200).send({notes: posts})
+				res.status(200).send(posts)
 			})
 			.catch((error) => {
 				console.log(error);
@@ -62,10 +54,6 @@ module.exports = function(app, db){
 
 	const adminRouter = require('./adminRouter.js');
 	app.use(adminRouter);
-
-	app.get('/admin/newpost', function(req,res) {
-		res.sendFile('/views/newpost.html', {root: __dirname});
-	});
 
 	app.post('/admin/newpost', function(req, res) {
 
