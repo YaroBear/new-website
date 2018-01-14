@@ -35,8 +35,6 @@
 	padding-right: 30px;
 	overflow: hidden;
 	max-height: 300px;
-	display: block;
-	margin-bottom: 30px;
 }
 
 .post.border-purple {
@@ -65,6 +63,7 @@
 	padding-right: 30px;
 	position: absolute;
 	right: 0;
+	bottom: -22px;
 
 }
 

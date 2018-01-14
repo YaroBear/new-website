@@ -1,6 +1,5 @@
 const userLogin = require('./user-login');
 const posts = require('./posts');
-require('./custom-helpers.js');
 
 module.exports = function(app, db){
 
@@ -68,6 +67,7 @@ module.exports = function(app, db){
 			data.title = req.body.title;
 			data.body = req.body.body;
 			data.date = new Date(Date.now());
+			data.comments = [];
 			if(req.body.tags){
 				data.tags = req.body.tags.split(',');
 			}
@@ -97,6 +97,7 @@ module.exports = function(app, db){
 			data.title = req.body.title;
 			data.body = req.body.body;
 			data.date = new Date(Date.now());
+			data.comments = [];
 			if(req.body.tags){
 				data.tags = req.body.tags.split(',');
 			}
